@@ -34,19 +34,17 @@ public class MyDocumentOrganizer implements DocumentOrganizer {
             while (organizing) {
                 Document nextDocument = documentProducer.get();
                 if (nextDocument != null) {
+                    updateCount(nextDocument);
                     DocumentType documentType = documentTypeDetector.detect(nextDocument);
                     switch (documentType) {
                         case SPAM:
                             documentConsumer.consumeSpam(nextDocument);
-                            updateCount(nextDocument);
                             break;
                         case IMPORTANT:
                             documentConsumer.consumeImportant(nextDocument);
-                            updateCount(nextDocument);
                             break;
                         case ORDINARY:
                             documentConsumer.consumeOrdinary(nextDocument);
-                            updateCount(nextDocument);
                             break;
                         case UNKNOWN:
                             throw new UnknownDocumentTypeException("Unknown document type passed.");
